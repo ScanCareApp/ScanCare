@@ -8,10 +8,11 @@
 
     <TextView
         android:id="@+id/tvLoginWords"
-        android:layout_width="334dp"
-        android:layout_height="123dp"
+        android:layout_width="332dp"
+        android:layout_height="140dp"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="120dp"
+        android:fontFamily="@font/poppinsregular"
         android:text="@string/tv_login"
         android:textSize="35sp"
         android:textStyle="bold"
@@ -33,6 +34,7 @@
             android:layout_height="70dp"
             android:ems="10"
             android:hint="@string/username"
+            android:fontFamily="@font/poppinsregular"
             android:textStyle="bold"
             tools:layout_editor_absoluteX="20dp"
             tools:layout_editor_absoluteY="319dp" />
@@ -54,6 +56,7 @@
             android:layout_height="70dp"
             android:ems="10"
             android:hint="@string/password"
+            android:fontFamily="@font/poppinsregular"
             android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,6 +67,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="24dp"
         android:text="@string/login"
+
         android:textSize="16sp"
         android:backgroundTint="@color/green"
         app:layout_constraintStart_toStartOf="parent"
