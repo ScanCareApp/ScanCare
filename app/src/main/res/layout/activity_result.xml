@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.result.ResultActivity">
+
+    <ImageView
+        android:id="@+id/resultImage"
+        android:layout_width="match_parent"
+        android:layout_height="270dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/image_example"
+        android:contentDescription="@string/result_image"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingHorizontal="16dp"
+        android:text="@string/product_name"
+        android:textSize="22sp"
+        android:fontFamily="@font/poppinsbold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/resultImage" />
+
+    <TextView
+        android:id="@+id/tvNoBpom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/nomor_bpom"
+        android:textSize="12sp"
+        android:fontFamily="@font/poppinslight"
+        android:textColor="@color/grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="206dp" />
+
+    <TextView
+        android:id="@+id/tvBpomStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="110dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/poppinslight"
+        android:text="@string/bpom_status"
+        android:textColor="@color/grey"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <View
+        android:id="@+id/shapeView"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectangle_shape"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/tvBpomStatus" />
+
+    <TextView
+        android:id="@+id/tvBpomStatusResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"
+        android:drawablePadding="4dp"
+        android:paddingTop="3dp"
+        android:text="@string/bpom_certified"
+        android:fontFamily="@font/poppinsregular"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/shapeView"
+        app:layout_constraintTop_toTopOf="@+id/shapeView"
+        app:drawableStartCompat="@drawable/baseline_check_circle_24" />
+
+    <TextView
+        android:id="@+id/tvNoBpomResult"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/noBpom_result"
+        android:fontFamily="@font/poppinssemibold"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvNoBpom" />
+
+    <TextView
+        android:id="@+id/tv_ingredients"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/ingredient"
+        android:textSize="16sp"
+        android:fontFamily="@font/poppinsregular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvNoBpomResult" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvIngredienst"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="8dp"
+        android:paddingTop="16dp"
+        android:background="@drawable/rectangle_primary10"
+        tools:listitem="@layout/item_ingredients"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_ingredients" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/white"
+        android:src="@drawable/baseline_arrow_back_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.FAB"
+        app:fabCustomSize="50dp"
+        android:contentDescription="@string/back_to_previous"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

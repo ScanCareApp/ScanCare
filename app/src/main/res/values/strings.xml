@@ -7,7 +7,7 @@
     <string name="greting">Hello, Username\n</string>
     <string name="username">Username</string>
     <string name="address">Address</string>
-    <string name="edit">Edit Profile\n</string>
+    <string name="edit">Edit Profile</string>
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
     <string name="history">Scan History</string>
@@ -25,4 +25,17 @@
     <string name="register_now">Register Now</string>
     <string name="loginHaveAccount">Don’t have an account?</string>
     <string name="login_now">Login Now</string>
+    <string name="back_to_previous">back to previous</string>
+    <string name="product_name">Skintific Pure Centella Acne Calming Toner</string>
+    <string name="nomor_bpom">Nomor BPOM</string>
+    <string name="bpom_status">BPOM Status</string>
+    <string name="noBpom_result">NA11221201029</string>
+    <string name="ingredient">Ingredients</string>
+    <string name="bpom_certified">BPOM-certified</string>
+    <string name="result_image">Result Image</string>
+    <string name="upload">Upload</string>
+    <string name="photo_to_scan">photo to scan</string>
+    <string name="ingredient_name">Centella Asiatica Extract</string>
+    <string name="function">Function</string>
+    <string name="ingredient_function">Centella Asiatica Extract, or gotu kola, is a skincare superhero known for its diverse benefits. It speeds up skin healing, reduces inflammation, and fights signs of aging by boosting collagen production. \n \nIdeal for sensitive skin, it manages acne, soothes irritation, and maintains skin health. Found in various skincare products, a patch test is recommended before use to check for any adverse reactions.</string>
 </resources>

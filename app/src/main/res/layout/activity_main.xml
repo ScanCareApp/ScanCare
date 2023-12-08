@@ -24,7 +24,8 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/imgUser"
-        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintEnd_toStartOf="@+id/imageView4"
         app:layout_constraintHorizontal_bias="0.072"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -32,16 +33,14 @@
 
     <TextView
         android:id="@+id/profile"
-        android:layout_width="370dp"
-        android:layout_height="120dp"
+        android:layout_width="350dp"
+        android:layout_height="140dp"
         android:layout_marginTop="112dp"
         android:background="@drawable/profilebox"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.39"
+        app:layout_constraintHorizontal_bias="0.414"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </TextView>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgUser"
@@ -52,7 +51,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
+        android:src="@drawable/blank_profile"/>
 
     <TextView
         android:id="@+id/username"
@@ -83,12 +82,26 @@
         android:id="@+id/edtProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="12dp"
+        android:drawablePadding="4dp"
         android:text="@string/edit"
         android:textColor="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/address"
-        app:layout_constraintTop_toTopOf="@+id/profile" />
+        app:drawableStartCompat="@drawable/ic_edit"
+        app:layout_constraintBottom_toBottomOf="@+id/profile"
+        app:layout_constraintEnd_toEndOf="@+id/profile" />
+
+    <TextView
+        android:id="@+id/userId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="XXXXXXXX"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/profile"
+        app:layout_constraintStart_toStartOf="@+id/profile" />
 
     <ImageView
         android:id="@+id/iconAddress"
@@ -100,15 +113,6 @@
         app:layout_constraintTop_toBottomOf="@+id/username"
         app:srcCompat="@drawable/ic_location" />
 
-    <ImageView
-        android:id="@+id/iconEdit"
-        android:layout_width="20dp"
-        android:layout_height="18dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/profile"
-        app:layout_constraintEnd_toStartOf="@+id/edtProfile"
-        app:srcCompat="@drawable/ic_edit" />
 
     <ImageView
         android:id="@+id/scanImage"
@@ -161,10 +165,19 @@
         app:layout_constraintTop_toBottomOf="parent"
         tools:layout_editor_absoluteX="16dp">
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </ScrollView>
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_logout_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
