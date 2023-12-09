@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.dicoding.scancare.R
 import com.dicoding.scancare.ui.main.MainActivity
+import com.dicoding.scancare.ui.welcome.WelcomeActivity
 
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,7 +17,7 @@ class SplashScreenActivity : AppCompatActivity() {
             } catch (e: InterruptedException) {
                 e.printStackTrace()
             } finally {
-                val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
+                val intent = Intent(this@SplashScreenActivity, WelcomeActivity::class.java)
                 startActivity(intent)
                 finish()
             }
