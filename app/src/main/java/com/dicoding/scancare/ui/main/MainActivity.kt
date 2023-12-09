@@ -15,6 +15,11 @@ import com.dicoding.scancare.ui.detail.DetailActivity
 import com.dicoding.scancare.ui.result.ResultActivity
 import com.dicoding.scancare.ui.scan.ScanImageActivity
 import com.dicoding.scancare.utils.getImageUri
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -23,11 +28,33 @@ class MainActivity : AppCompatActivity() {
     private val historyList = mutableListOf<HistoryItem>()
     private lateinit var historyAdapter: HistoryAdapter
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // mendapatkan user id pengguna saat ini
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+
+        // mendapatkan referensi pengguna dari firebase
+        if (userId != null) {
+            val userReference = FirebaseDatabase.getInstance().reference.child("users").child(userId)
+
+            // melihat perubahan pada data pengguna
+            userReference.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    // Mendapatkan nilai nama dari firebase dan menampilkannya
+                    val userName = snapshot.child("name").getValue(String::class.java)
+                    binding.tvGreetingName.text = userName
+                    binding.username.text = userName
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    //digunakan untuk handle database error
+                    Log.e("MainActivity", "Gagal membaca data pengguna", error.toException())
+                }
+            })
+        }
 
         binding.btnGallery.setOnClickListener {
             startGallery()
@@ -48,8 +75,6 @@ class MainActivity : AppCompatActivity() {
 
         // memberitahu adapter data sudah dibah
         historyAdapter.notifyDataSetChanged()
-
-
 
     }
 

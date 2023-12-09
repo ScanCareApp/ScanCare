@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.dicoding.scancare.databinding.ActivityRegisterBinding
 import com.dicoding.scancare.ui.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -64,14 +65,28 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun RegisterFirebase(name: String, email: String, password: String) {
-        auth.createUserWithEmailAndPassword(email,password)
-            .addOnCompleteListener(this){
-                if (it.isSuccessful){
-                    Toast.makeText(this,"Register Berhasil", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this,LoginActivity::class.java)
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Registrasi berhasil, simpan nama ke Firebase
+                    val userId = auth.currentUser?.uid
+                    val user = HashMap<String, Any>()
+                    user["name"] = name
+
+                    // Simpan data pengguna ke Firebase
+                    if (userId != null) {
+                        val userReference = FirebaseDatabase.getInstance().reference.child("users").child(userId)
+                        userReference.setValue(user)
+                    }
+
+                    Toast.makeText(this, "Register Berhasil", Toast.LENGTH_SHORT).show()
+
+                    // data berhasil disimpan, intent ke Login Activity
+                    val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)
-                }else{
-                    Toast.makeText(this,"${it.exception?.message}", Toast.LENGTH_SHORT).show()
+                    finish()
+                } else {
+                    Toast.makeText(this, "${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
     }
