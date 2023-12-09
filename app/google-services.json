@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "666383512165",
+    "project_id": "capstone-project-ef647",
+    "storage_bucket": "capstone-project-ef647.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:666383512165:android:7c33e883a6d80c26fa4c8c",
+        "android_client_info": {
+          "package_name": "com.dicoding.scancare"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_FnQfoNmyNW1DM_7_X4NKtnZJByC68xI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
