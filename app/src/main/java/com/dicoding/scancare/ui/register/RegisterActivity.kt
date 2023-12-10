@@ -30,6 +30,7 @@ class RegisterActivity : AppCompatActivity() {
             val name = binding.nameEditText.text.toString()
             val email = binding.emailEditTextInput.text.toString()
             val password = binding.passwordEditTextInput.text.toString()
+            val alamat = binding.adressInputEditText.text.toString()
 
             //validasi email
             if (email.isEmpty()){
@@ -60,18 +61,19 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            RegisterFirebase(name,email,password)
+            RegisterFirebase(name,email,password,alamat)
         }
     }
 
-    private fun RegisterFirebase(name: String, email: String, password: String) {
+    private fun RegisterFirebase(nama: String, email: String, password: String, alamat: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Registrasi berhasil, simpan nama ke Firebase
+                    // Registrasi berhasil, simpan nama dan alamat ke Firebase
                     val userId = auth.currentUser?.uid
                     val user = HashMap<String, Any>()
-                    user["name"] = name
+                    user["name"] = nama
+                    user["address"] = alamat
 
                     // Simpan data pengguna ke Firebase
                     if (userId != null) {
@@ -79,7 +81,7 @@ class RegisterActivity : AppCompatActivity() {
                         userReference.setValue(user)
                     }
 
-                    Toast.makeText(this, "Register Berhasil", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()
 
                     // data berhasil disimpan, intent ke Login Activity
                     val intent = Intent(this, LoginActivity::class.java)

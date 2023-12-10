@@ -43,14 +43,17 @@ class MainActivity : AppCompatActivity() {
             // melihat perubahan pada data pengguna
             userReference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    // Mendapatkan nilai nama dari firebase dan menampilkannya
+                    // Mendapatkan nilai nama dan alamat dari firebase dan menampilkannya
                     val userName = snapshot.child("name").getValue(String::class.java)
+                    val userAddress = snapshot.child("address").getValue(String::class.java)
+
                     binding.tvGreetingName.text = userName
                     binding.username.text = userName
+                    binding.address.text = userAddress
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    //digunakan untuk handle database error
+                    //digunakan untuk menangani kesalahan database jika diperlukan
                     Log.e("MainActivity", "Gagal membaca data pengguna", error.toException())
                 }
             })
@@ -77,6 +80,57 @@ class MainActivity : AppCompatActivity() {
         historyAdapter.notifyDataSetChanged()
 
     }
+
+
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        binding = ActivityMainBinding.inflate(layoutInflater)
+//        setContentView(binding.root)
+//
+//        // mendapatkan user id pengguna saat ini
+//        val userId = FirebaseAuth.getInstance().currentUser?.uid
+//
+//        // mendapatkan referensi pengguna dari firebase
+//        if (userId != null) {
+//            val userReference = FirebaseDatabase.getInstance().reference.child("users").child(userId)
+//
+//            // melihat perubahan pada data pengguna
+//            userReference.addValueEventListener(object : ValueEventListener {
+//                override fun onDataChange(snapshot: DataSnapshot) {
+//                    // Mendapatkan nilai nama dari firebase dan menampilkannya
+//                    val userName = snapshot.child("name").getValue(String::class.java)
+//                    binding.tvGreetingName.text = userName
+//                    binding.username.text = userName
+//                }
+//
+//                override fun onCancelled(error: DatabaseError) {
+//                    //digunakan untuk handle database error
+//                    Log.e("MainActivity", "Gagal membaca data pengguna", error.toException())
+//                }
+//            })
+//        }
+//
+//        binding.btnGallery.setOnClickListener {
+//            startGallery()
+//        }
+//        binding.btnCamera.setOnClickListener {
+//            startCamera()
+//        }
+//
+//        // mengatur adapter untuk history
+//        historyAdapter = HistoryAdapter(historyList) { historyItem ->
+//            navigateToResultActivity(historyItem)
+//        }
+//        binding.recyclerViewHistory.layoutManager = LinearLayoutManager(this)
+//        binding.recyclerViewHistory.adapter = historyAdapter
+//
+//        // data dummy history
+//        historyList.add(HistoryItem("Skintific Pure Centella Acne Calming Toner", "Aplha Hydroxy Acids, Retinoids", "2023-01-01", "12:00 PM"))
+//
+//        // memberitahu adapter data sudah dibah
+//        historyAdapter.notifyDataSetChanged()
+//
+//    }
 
     private fun startCamera() {
         currentImageUri = getImageUri(this)
