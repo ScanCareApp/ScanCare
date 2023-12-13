@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.dicoding.scancare.ViewModelFactory
 import com.dicoding.scancare.data.remote.ResultState
@@ -56,22 +57,26 @@ class ScanImageActivity : AppCompatActivity() {
                 binding.progressBar.visibility = View.VISIBLE
                 when (result) {
                     is ResultState.Loading -> {
+                        // Anda mungkin ingin menampilkan progress di sini jika diperlukan
                         binding.progressBar.visibility = View.VISIBLE
                     }
                     is ResultState.Success -> {
+                        // Proses respons yang berhasil
+                        binding.progressBar.visibility = View.GONE // Sembunyikan progress bar
                         Log.d("Response Data", result.data.toString())
-                        val response = result.data
+                        // Lakukan tindakan setelah menerima respons yang berhasil, misalnya navigasi ke halaman lain
                         val intent = Intent(this@ScanImageActivity, ResultActivity::class.java)
-                        intent.putExtra("productName", response.productName)
                         startActivity(intent)
                         finish()
                     }
                     is ResultState.Error -> {
-                        binding.progressBar.visibility = View.GONE
+                        // Menangani kesalahan
+                        binding.progressBar.visibility = View.GONE // Sembunyikan progress bar
+                        Toast.makeText(this@ScanImageActivity, result.error, Toast.LENGTH_SHORT).show()
+                        finish()
                     }
                 }
             }
         }
-
     }
 }

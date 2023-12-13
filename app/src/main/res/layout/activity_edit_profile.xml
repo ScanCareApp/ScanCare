@@ -47,35 +47,47 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imgUser"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="16dp"
-                android:src="@drawable/blank_profile" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgUser"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="16dp"
+                    android:src="@drawable/blank_profile" />
 
-            <!-- Tiga input teks di bawah gambar -->
+                <ImageView
+                    android:id="@+id/pic_camera"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@id/imgUser"
+                    android:layout_marginTop="-50dp"
+                    android:src="@drawable/camera"
+                    android:layout_marginStart="150dp"/>
+            </RelativeLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Username"
                 android:fontFamily="@font/poppinsregular"
                 android:textSize="14sp"
-
-
                 />
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/usernameTextLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle_grey"
-                    android:drawableEnd="@drawable/baseline_edit_24"
-                    android:hint="Nadia Omara" />
+                    android:drawableEnd="@drawable/baseline_edit_24"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,14 +102,16 @@
             <com.google.android.material.textfield.TextInputLayout
 
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/addressTextLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle_grey"
                     android:drawableEnd="@drawable/baseline_edit_24"
-                    android:hint="Jakarta" />
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -111,20 +125,22 @@
                 />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailTextLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle_grey"
                     android:drawableEnd="@drawable/baseline_edit_24"
-                    android:hint="nadiaomara@gmail.com" />
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/btnUpload"
+                android:id="@+id/btnSave"
                 android:layout_width="250dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="24dp"
@@ -136,7 +152,6 @@
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

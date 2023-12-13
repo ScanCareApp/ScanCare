@@ -1,21 +1,22 @@
-package com.dicoding.scancare.ui.result
+package com.dicoding.scancare.ui.history
 
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.scancare.R
-import com.dicoding.scancare.data.database.ProductEntity
-import com.dicoding.scancare.data.remote.response.IngredientsItem
+import com.dicoding.scancare.data.database.IngredientEntity
 import com.dicoding.scancare.ui.detail.DetailActivity
 
-class IngredientsAdapter(private val ingredientsList: List<IngredientsItem>):RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
-
-    class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
+class IngredientsHistoryAdapter : ListAdapter<IngredientEntity, IngredientsHistoryAdapter.ViewHolder>(IngredientsDiffCallback()) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val ingredientName: TextView = itemView.findViewById(R.id.tv_item_name)
-        fun bind(ingredient: IngredientsItem){
+
+        fun bind(ingredient: IngredientEntity) {
             ingredientName.text = ingredient.nameIngredients
 
             itemView.setOnClickListener {
@@ -33,15 +34,18 @@ class IngredientsAdapter(private val ingredientsList: List<IngredientsItem>):Rec
         return ViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return ingredientsList.size
-    }
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val ingredient = ingredientsList[position]
+        val ingredient = getItem(position)
         holder.bind(ingredient)
-
     }
 
+    class IngredientsDiffCallback : DiffUtil.ItemCallback<IngredientEntity>() {
+        override fun areItemsTheSame(oldItem: IngredientEntity, newItem: IngredientEntity): Boolean {
+            return oldItem.id == newItem.id // Ganti dengan properti yang unik untuk memeriksa apakah item-item sama
+        }
 
+        override fun areContentsTheSame(oldItem: IngredientEntity, newItem: IngredientEntity): Boolean {
+            return oldItem == newItem // Ganti dengan properti lain yang mempengaruhi tampilan item
+        }
+    }
 }
