@@ -14,6 +14,10 @@ class DetailActivity : AppCompatActivity() {
         val productName = intent.getStringExtra("INGREDIENT_NAME")
         val function = intent.getStringExtra("INGREDIENT_FUNCTION")
 
+        binding.fabBack.setOnClickListener {
+            onBackPressed()
+        }
+
         binding.apply {
             tvIngredientName.text = productName
             tvIngredientFunction.text = function

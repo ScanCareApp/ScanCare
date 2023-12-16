@@ -20,6 +20,10 @@ class ResultActivity : AppCompatActivity() {
         val ingredientsList = ScanCareDataHolder.getIngredients()?.filterNotNull()
         val productDetails = ScanCareDataHolder.getProductDetails()
 
+        binding.fabBack.setOnClickListener {
+            onBackPressed()
+        }
+
         binding.textView.text = productDetails?.productName
         binding.tvNoBpomResult.text = productDetails?.noBPOM
         Glide.with(this)

@@ -11,21 +11,42 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import com.bumptech.glide.Glide
 import com.dicoding.scancare.R
+import com.dicoding.scancare.ViewModelFactory
+import com.dicoding.scancare.data.remote.ResultState
 import com.dicoding.scancare.databinding.ActivityEditProfileBinding
+import com.dicoding.scancare.ui.register.UserViewModel
 import com.dicoding.scancare.ui.scan.CameraActivity
+import com.dicoding.scancare.utils.reduceFileImage
+import com.dicoding.scancare.utils.uriToFile
+import com.google.android.material.textfield.TextInputEditText
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 
+@Suppress("DEPRECATION")
 class EditProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditProfileBinding
     private var currentImageUri: Uri? = null
+    private var previousImageUri: Uri? = null
+    private var id: String = ""
+
+
+    private val userViewModel by viewModels<UserViewModel> {
+        ViewModelFactory.getInstance(applicationContext)
+    }
 
     private fun allPermissionsGranted() =
         ContextCompat.checkSelfPermission(
@@ -49,8 +70,92 @@ class EditProfileActivity : AppCompatActivity() {
         binding = ActivityEditProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        userViewModel.getSession().observe(this) { user ->
+            id = user.userId
+            displayUserProfile(id)
+        }
+
         binding.picCamera.setOnClickListener {
             showDialog()
+        }
+        binding.btnSave.setOnClickListener {
+            val usn = binding.edUsername
+            val address = binding.edAddress
+            Log.d("Image URI", "Value of currentImageUri: $currentImageUri")
+            updateProfile(id, usn, address)
+        }
+        binding.fabBack.setOnClickListener {
+            onBackPressed()
+        }
+
+    }
+
+    private fun updateProfile(id:String,  usn: TextInputEditText, address: TextInputEditText) {
+        binding.progressBar.visibility = View.VISIBLE
+        currentImageUri?.let { uri ->
+            val imageFile = uriToFile(uri, this).reduceFileImage()
+            Log.d("Image File", "showImage: ${imageFile.path}")
+            val username = usn.text.toString().toRequestBody("text/plain".toMediaType())
+            val addr = address.text.toString().toRequestBody("text/plain".toMediaType())
+            val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+            val imgMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                "file",
+                imageFile.name,
+                requestImageFile
+            )
+            userViewModel.updateProfile(id, username, addr, imgMultipart)
+                .observe(this){result ->
+                    when(result){
+                        is ResultState.Loading -> {
+                            binding.progressBar.visibility = View.VISIBLE
+                        }
+                        is ResultState.Success -> {
+                            binding.progressBar.visibility = View.GONE
+                            val response = result.data
+                            Log.d("Success", "Image Multipart: $imgMultipart")
+                            Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
+                            finish()
+                        }
+                        is ResultState.Error -> {
+                            val error = result.error
+                            Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+                            binding.progressBar.visibility = View.GONE
+                        }
+                    }
+                }
+        }
+
+    }
+
+    private fun displayUserProfile(id: String) {
+        binding.progressBar.visibility = View.VISIBLE
+        userViewModel.getUserProfile(id).observe(this){result->
+            when(result){
+                is ResultState.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+
+                }
+                is ResultState.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    val userProfile = result.data
+                    previousImageUri = Uri.parse(userProfile.photo)
+                    binding.apply {
+                        edUsername.setText(userProfile.username)
+                        edAddress.setText(userProfile.address)
+                        edEmail.setText(userProfile.email)
+                    }
+                    Glide.with(this)
+                        .load(userProfile.photo)
+                        .placeholder(R.drawable.blank_profile)
+                        .into(binding.imgUser)
+                }
+                is ResultState.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    val errorMessage = result.error
+                    Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+            }
         }
     }
 
@@ -101,6 +206,7 @@ class EditProfileActivity : AppCompatActivity() {
     ) { uri: Uri? ->
         if (uri != null) {
             currentImageUri = uri
+            Log.d("Image URI", "Selected from Gallery: $currentImageUri")
             showImage()
         } else {
             Log.d("Photo Picker", "No media selected")
@@ -124,8 +230,8 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
-
     companion object {
         private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
     }
 }
+

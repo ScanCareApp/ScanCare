@@ -4,30 +4,43 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.dicoding.scancare.R
 import com.dicoding.scancare.ViewModelFactory
+import com.dicoding.scancare.data.remote.ResultState
 import com.dicoding.scancare.databinding.ActivityMainBinding
 import com.dicoding.scancare.ui.edit.EditProfileActivity
+import com.dicoding.scancare.ui.register.UserViewModel
 import com.dicoding.scancare.ui.scan.CameraActivity
 import com.dicoding.scancare.ui.scan.PredictViewModel
 import com.dicoding.scancare.ui.scan.ScanImageActivity
+import com.dicoding.scancare.ui.welcome.WelcomeActivity
+import com.dicoding.scancare.utils.DateConverter
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var currentImageUri: Uri? = null
+    private var id: String = ""
     private val viewModel by viewModels<PredictViewModel> {
-        ViewModelFactory.getInstance(application)
+        ViewModelFactory.getInstance(this)
+    }
+
+    private val userViewModel by viewModels<UserViewModel> {
+        ViewModelFactory.getInstance(this)
     }
 
     private fun allPermissionsGranted() =
@@ -47,10 +60,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        userViewModel.getSession().observe(this) { user ->
+            id = user.userId
+            displayUserProfile(id)
+        }
 
         if (!allPermissionsGranted()) {
             requestPermissionLauncher.launch(REQUIRED_PERMISSION)
@@ -71,10 +90,48 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, EditProfileActivity::class.java)
             startActivity(intent)
         }
+        binding.logout.setOnClickListener {
+            userViewModel.logout()
+        }
+
         viewModel.scannedProducts.observe(this) { products ->
-            adapter.updateHistory(products) // Update daftar produk pada adapter
+            adapter.updateHistory(products)
         }
         viewModel.getAllScannedProducts()
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun displayUserProfile(id: String) {
+        userViewModel.getUserProfile(id).observe(this){result->
+            binding.progressBar.visibility = View.VISIBLE
+            when(result){
+                is ResultState.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is ResultState.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    val userProfile = result.data
+                    Log.d("Response Data", result.data.toString())
+                    binding.apply {
+                        tvUsername.text = userProfile.username
+                        username.text = userProfile.username
+                        address.text = userProfile.address
+                        createAt.text = DateConverter(userProfile.creationDate)
+                    }
+                    Glide.with(this)
+                        .load(userProfile.photo)
+                        .placeholder(R.drawable.blank_profile)
+                        .into(binding.imgUser)
+                }
+                is ResultState.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    val errorMessage = result.error
+                    Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+            }
+        }
 
     }
 
@@ -94,6 +151,7 @@ class MainActivity : AppCompatActivity() {
         if (uri != null) {
             currentImageUri = uri
             val intent = Intent(this, ScanImageActivity::class.java)
+            Log.d("Image URI", "Selected from Gallery: $currentImageUri")
             intent.putExtra("imageUri", uri.toString())
             startActivity(intent)
         } else {
@@ -117,7 +175,6 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         viewModel.getAllScannedProducts()
     }
-
     companion object {
         private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
     }

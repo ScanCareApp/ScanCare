@@ -14,7 +14,7 @@
         android:textColor="@color/black"
         android:fontFamily="@font/poppinssemibold"
         android:layout_marginTop="5dp"
-        android:textSize="25dp"/>
+        android:textSize="20dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppinssemibold"
-                android:textSize="24dp"
+                android:textSize="16dp"
                 android:text="Camera" />
         </LinearLayout>
 
@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppinssemibold"
-                android:textSize="24dp"
+                android:textSize="16dp"
                 android:text="Gallery" />
         </LinearLayout>
     </LinearLayout>

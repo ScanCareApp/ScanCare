@@ -39,6 +39,9 @@ class ScanImageActivity : AppCompatActivity() {
             binding.progressBar.visibility = View.VISIBLE
             uploadImage()
         }
+        binding.fabBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun uploadImage() {
@@ -61,10 +64,8 @@ class ScanImageActivity : AppCompatActivity() {
                         binding.progressBar.visibility = View.VISIBLE
                     }
                     is ResultState.Success -> {
-                        // Proses respons yang berhasil
-                        binding.progressBar.visibility = View.GONE // Sembunyikan progress bar
+                        binding.progressBar.visibility = View.GONE //
                         Log.d("Response Data", result.data.toString())
-                        // Lakukan tindakan setelah menerima respons yang berhasil, misalnya navigasi ke halaman lain
                         val intent = Intent(this@ScanImageActivity, ResultActivity::class.java)
                         startActivity(intent)
                         finish()

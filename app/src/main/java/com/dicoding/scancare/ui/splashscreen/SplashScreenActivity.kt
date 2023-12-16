@@ -4,9 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.dicoding.scancare.R
-import com.dicoding.scancare.ui.main.MainActivity
+import com.dicoding.scancare.ui.welcome.WelcomeActivity
 
 class SplashScreenActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
@@ -16,11 +17,12 @@ class SplashScreenActivity : AppCompatActivity() {
             } catch (e: InterruptedException) {
                 e.printStackTrace()
             } finally {
-                val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
+                val intent = Intent(this@SplashScreenActivity, WelcomeActivity::class.java)
                 startActivity(intent)
                 finish()
             }
         }
         splash.start()
+
     }
 }

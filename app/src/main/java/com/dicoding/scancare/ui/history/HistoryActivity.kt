@@ -7,10 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.scancare.R
 import com.dicoding.scancare.ViewModelFactory
-import com.dicoding.scancare.data.DummyData.ingredientsList
-import com.dicoding.scancare.data.database.IngredientEntity
 import com.dicoding.scancare.databinding.ActivityHistoryBinding
-import com.dicoding.scancare.ui.result.IngredientsAdapter
 import com.dicoding.scancare.ui.scan.PredictViewModel
 
 class HistoryActivity : AppCompatActivity() {
@@ -23,6 +20,9 @@ class HistoryActivity : AppCompatActivity() {
         binding = ActivityHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.fabBack.setOnClickListener {
+            onBackPressed()
+        }
         val noBPOM = intent.getStringExtra("NOBPOM")
         viewModel.getProductAndIngredientsByNoBPOM(noBPOM ?: "")
 

@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="90dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardview"
     android:layout_margin="4dp">
@@ -33,7 +33,7 @@
             android:text="@string/namaproduk"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold"
+            android:fontFamily="@font/poppinssemibold"
             app:layout_constraintStart_toEndOf="@+id/scanImage"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,6 +46,7 @@
             android:text="@string/ingredients"
             android:textColor="@color/white"
             android:textSize="14sp"
+            android:fontFamily="@font/poppinslight"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/scanImage"
             app:layout_constraintTop_toBottomOf="@+id/tvNamaProduk" />
