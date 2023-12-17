@@ -12,6 +12,7 @@ import com.dicoding.scancare.ViewModelFactory
 import com.dicoding.scancare.data.preference.UserModel
 import com.dicoding.scancare.data.remote.ResultState
 import com.dicoding.scancare.databinding.ActivityRegisterBinding
+import com.dicoding.scancare.ui.login.LoginActivity
 import com.dicoding.scancare.ui.main.MainActivity
 import com.google.android.material.textfield.TextInputEditText
 
@@ -35,6 +36,11 @@ class RegisterActivity : AppCompatActivity() {
             val password = binding.passwordEditTextLayout.findViewById<TextInputEditText>(R.id.passwordEditTextInput).text.toString()
 
             userViewModel.registerUser(address, email, password, name)
+        }
+
+        binding.tvLoginNow.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
         }
 
         userViewModel.registerResult.observe(this, Observer { result ->

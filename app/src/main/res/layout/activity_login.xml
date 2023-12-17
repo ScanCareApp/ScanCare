@@ -28,11 +28,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvLoginWords">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.dicoding.scancare.customview.EditTextEmail
             android:id="@+id/loginEmailInputEditText"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:ems="10"
+            android:inputType="textEmailAddress"
             android:fontFamily="@font/poppinsregular"
             android:hint="@string/email"
             android:textStyle="bold"
@@ -48,22 +49,27 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginInputLayout">
+        app:layout_constraintTop_toBottomOf="@+id/loginInputLayout"
+        app:endIconMode="password_toggle"
+        >
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.dicoding.scancare.customview.EditTextPassword
             android:id="@+id/loginPasswordInputEditText"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:ems="10"
+            android:inputType="textPassword"
             android:fontFamily="@font/poppinsregular"
             android:hint="@string/password"
             android:textStyle="bold" />
+
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="330dp"
-        android:layout_height="70dp"
+        android:layout_width="310dp"
+        android:layout_height="60dp"
         android:layout_marginTop="24dp"
         android:backgroundTint="@color/green"
         android:fontFamily="@font/poppinssemibold"
