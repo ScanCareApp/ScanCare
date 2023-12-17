@@ -23,4 +23,8 @@ object Injection {
         return UserRepository.getInstance(authApiService, pref)
     }
 
+      fun provideUserPreference(context: Context): UserPreference {
+        return UserPreference.getInstance(context.dataStore)
+    }
+
 }

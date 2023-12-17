@@ -1,6 +1,7 @@
 package com.dicoding.scancare.ui.main
 
 import android.Manifest
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -9,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.Window
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -91,13 +94,44 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.logout.setOnClickListener {
-            userViewModel.logout()
+            showDialogLogout()
         }
 
         viewModel.scannedProducts.observe(this) { products ->
-            adapter.updateHistory(products)
+            val groupedHistory = products.groupBy { it.productName }
+
+            val uniqueHistory = groupedHistory.map { (_, value) ->
+                value.first()
+            }
+            adapter.updateHistory(uniqueHistory)
         }
-        viewModel.getAllScannedProducts()
+        viewModel.getAllScannedProducts(id)
+
+    }
+
+    private fun showDialogLogout() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.layout_logout_dialog)
+
+        val btnYes: Button = dialog.findViewById(R.id.btnYes)
+        val btnNo: Button = dialog.findViewById(R.id.btnNo)
+
+        btnYes.setOnClickListener {
+            userViewModel.logout()
+            Toast.makeText(this, "You're logging out", Toast.LENGTH_LONG).show()
+            val loginActivity = Intent(this@MainActivity, WelcomeActivity::class.java)
+            startActivity(loginActivity)
+            finish()
+
+
+        }
+        btnNo.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
 
     }
 
@@ -126,9 +160,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 is ResultState.Error -> {
                     binding.progressBar.visibility = View.GONE
-                    val errorMessage = result.error
-                    Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
-                    finish()
+//                    val errorMessage = result.error
+//                    Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+//                    finish()
                 }
             }
         }
@@ -173,7 +207,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getAllScannedProducts()
+        viewModel.getAllScannedProducts(id)
     }
     companion object {
         private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA

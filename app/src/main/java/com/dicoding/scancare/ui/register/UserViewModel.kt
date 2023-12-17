@@ -41,16 +41,21 @@ class UserViewModel(private val userRepository: UserRepository): ViewModel() {
 
     fun updateProfile(
         user_id: String,
-        username: RequestBody,
-        address: RequestBody,
-        image: MultipartBody.Part
-    ): LiveData<ResultState<PutUserProfileResponse>>{
+        username: RequestBody?,
+        address: RequestBody?,
+        image: MultipartBody.Part? = null
+    ): LiveData<ResultState<PutUserProfileResponse>> {
         viewModelScope.launch {
-            val result = userRepository.updateProfile(user_id, username, address, image)
+            val result = if (image != null) {
+                userRepository.updateProfileWithImage(user_id, username, address, image)
+            } else {
+                userRepository.updateProfile(user_id, username, address)
+            }
             livedata.value = result
         }
         return livedata
     }
+
 
     fun saveSession(user: UserModel) {
         viewModelScope.launch {

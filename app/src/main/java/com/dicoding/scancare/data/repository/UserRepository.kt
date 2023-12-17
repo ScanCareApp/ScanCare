@@ -51,23 +51,41 @@ class UserRepository private constructor(
 
     suspend fun updateProfile(
         user_id: String,
-        username: RequestBody,
-        address: RequestBody,
-        image: MultipartBody.Part
-    ): ResultState<PutUserProfileResponse>{
+        username: RequestBody?,
+        address: RequestBody?
+    ): ResultState<PutUserProfileResponse> {
         return try {
-            val response = authApiService.updateProfile(user_id, image, username, address)
+            val response = authApiService.updateProfile(user_id, null, username, address)
             ResultState.Success(response)
-        }catch (e: HttpException){
+        } catch (e: HttpException) {
             val error = e.response()?.errorBody()?.string()
             val jsonObject = JSONObject(error!!)
             val errorMessage = jsonObject.getString("message")
             ResultState.Error(errorMessage)
-        }catch (e: Exception){
-            ResultState .Error(e.message.toString())
+        } catch (e: Exception) {
+            ResultState.Error(e.message.toString())
         }
-
     }
+
+    suspend fun updateProfileWithImage(
+        user_id: String,
+        username: RequestBody?,
+        address: RequestBody?,
+        image: MultipartBody.Part?
+    ): ResultState<PutUserProfileResponse> {
+        return try {
+            val response = authApiService.updateProfile(user_id, image, username, address)
+            ResultState.Success(response)
+        } catch (e: HttpException) {
+            val error = e.response()?.errorBody()?.string()
+            val jsonObject = JSONObject(error!!)
+            val errorMessage = jsonObject.getString("message")
+            ResultState.Error(errorMessage)
+        } catch (e: Exception) {
+            ResultState.Error(e.message.toString())
+        }
+    }
+
 
     suspend fun loginUser(email: String, password: String): ResultState<LoginResponse> =
         withContext(Dispatchers.IO) {

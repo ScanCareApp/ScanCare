@@ -38,4 +38,9 @@
     <string name="ingredient_name">Centella Asiatica Extract</string>
     <string name="function">Function</string>
     <string name="ingredient_function">Centella Asiatica Extract, or gotu kola, is a skincare superhero known for its diverse benefits. It speeds up skin healing, reduces inflammation, and fights signs of aging by boosting collagen production. \n \nIdeal for sensitive skin, it manages acne, soothes irritation, and maintains skin health. Found in various skincare products, a patch test is recommended before use to check for any adverse reactions.</string>
+    <string name="logout_text">Logging out will end your session. Do you want to continue?</string>
+    <string name="scancare">ScanCare</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="illegal">ILLEGAL</string>
 </resources>

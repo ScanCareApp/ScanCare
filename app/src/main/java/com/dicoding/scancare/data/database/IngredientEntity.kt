@@ -10,7 +10,7 @@ data class IngredientEntity(
     @ColumnInfo(name = "id")
     var id: Int = 0,
     @ColumnInfo(name = "productNoBPOM")
-    var productNoBPOM: String, // Kunci asing untuk menghubungkan ke ProductEntity
+    var productNoBPOM: String,
     @ColumnInfo(name = "nameIngredients")
     var nameIngredients: String,
     @ColumnInfo(name = "fungsi")

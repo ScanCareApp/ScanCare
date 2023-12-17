@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide
 import com.dicoding.scancare.R
 import com.dicoding.scancare.ViewModelFactory
 import com.dicoding.scancare.data.remote.ResultState
+import com.dicoding.scancare.data.remote.response.PutUserProfileResponse
 import com.dicoding.scancare.databinding.ActivityEditProfileBinding
 import com.dicoding.scancare.ui.register.UserViewModel
 import com.dicoding.scancare.ui.scan.CameraActivity
@@ -42,7 +43,7 @@ class EditProfileActivity : AppCompatActivity() {
     private var currentImageUri: Uri? = null
     private var previousImageUri: Uri? = null
     private var id: String = ""
-
+ 
 
     private val userViewModel by viewModels<UserViewModel> {
         ViewModelFactory.getInstance(applicationContext)
@@ -90,51 +91,69 @@ class EditProfileActivity : AppCompatActivity() {
 
     }
 
-    private fun updateProfile(id:String,  usn: TextInputEditText, address: TextInputEditText) {
+    private fun updateProfile(id: String, usn: TextInputEditText, address: TextInputEditText) {
         binding.progressBar.visibility = View.VISIBLE
-        currentImageUri?.let { uri ->
-            val imageFile = uriToFile(uri, this).reduceFileImage()
-            Log.d("Image File", "showImage: ${imageFile.path}")
+
+        // Cek apakah ada foto yang dipilih
+        if (currentImageUri != null) {
+            // Jika ada foto yang dipilih
+            // Lakukan pembaruan dengan foto
+            currentImageUri?.let { uri ->
+                val imageFile = uriToFile(uri, this).reduceFileImage()
+                val username = usn.text.toString().toRequestBody("text/plain".toMediaType())
+                val addr = address.text.toString().toRequestBody("text/plain".toMediaType())
+                val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+                val imgMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                    "file",
+                    imageFile.name,
+                    requestImageFile
+                )
+                userViewModel.updateProfile(id, username, addr, imgMultipart)
+                    .observe(this) { result ->
+                        handleResult(result)
+                    }
+            }
+        } else {
             val username = usn.text.toString().toRequestBody("text/plain".toMediaType())
             val addr = address.text.toString().toRequestBody("text/plain".toMediaType())
-            val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
-            val imgMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                "file",
-                imageFile.name,
-                requestImageFile
-            )
-            userViewModel.updateProfile(id, username, addr, imgMultipart)
-                .observe(this){result ->
-                    when(result){
-                        is ResultState.Loading -> {
-                            binding.progressBar.visibility = View.VISIBLE
-                        }
-                        is ResultState.Success -> {
-                            binding.progressBar.visibility = View.GONE
-                            val response = result.data
-                            Log.d("Success", "Image Multipart: $imgMultipart")
-                            Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
-                            finish()
-                        }
-                        is ResultState.Error -> {
-                            val error = result.error
-                            Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
-                            binding.progressBar.visibility = View.GONE
-                        }
-                    }
+            userViewModel.updateProfile(id, username, addr)
+                .observe(this) { result ->
+                    handleResult(result)
                 }
         }
-
     }
+
+    private fun handleResult(result: ResultState<PutUserProfileResponse>) {
+        when (result) {
+            is ResultState.Loading -> {
+                binding.progressBar.visibility = View.VISIBLE
+            }
+
+            is ResultState.Success -> {
+                binding.progressBar.visibility = View.GONE
+                val response = result.data
+                Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
+                finish()
+            }
+
+            is ResultState.Error -> {
+                val error = result.error
+                Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+                binding.progressBar.visibility = View.GONE
+            }
+        }
+    }
+
 
     private fun displayUserProfile(id: String) {
         binding.progressBar.visibility = View.VISIBLE
-        userViewModel.getUserProfile(id).observe(this){result->
-            when(result){
+        userViewModel.getUserProfile(id).observe(this) { result ->
+            when (result) {
                 is ResultState.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
 
                 }
+
                 is ResultState.Success -> {
                     binding.progressBar.visibility = View.GONE
                     val userProfile = result.data
@@ -149,6 +168,7 @@ class EditProfileActivity : AppCompatActivity() {
                         .placeholder(R.drawable.blank_profile)
                         .into(binding.imgUser)
                 }
+
                 is ResultState.Error -> {
                     binding.progressBar.visibility = View.GONE
                     val errorMessage = result.error
@@ -185,7 +205,10 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         dialog.show()
-        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
         dialog.window?.setGravity(Gravity.BOTTOM)

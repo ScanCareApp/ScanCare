@@ -27,9 +27,9 @@ interface AuthApiService {
     @PUT("userProfile/{user_id}")
     suspend fun updateProfile(
         @Path("user_id") user_id: String,
-        @Part file: MultipartBody.Part,
-        @Part("username") username: RequestBody,
-        @Part("address") address: RequestBody
+        @Part file: MultipartBody.Part?,
+        @Part("username") username: RequestBody?,
+        @Part("address") address: RequestBody?
     ): PutUserProfileResponse
 
     @POST("signup")

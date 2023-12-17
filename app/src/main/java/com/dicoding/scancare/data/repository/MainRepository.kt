@@ -36,8 +36,8 @@ class MainRepository private constructor(
         predictHistoryDatabase.predictHistoryDao().insertIngredients(ingredients)
     }
 
-    suspend fun getAllScannedProducts(): List<ProductEntity>{
-        return predictHistoryDatabase.predictHistoryDao().getAllScannedProducts()
+    suspend fun getAllScannedProducts(userId: String): List<ProductEntity>{
+        return predictHistoryDatabase.predictHistoryDao().getAllScannedProducts(userId)
     }
 
     suspend fun getProductByNoBPOM(noBPOM: String): ProductEntity? {

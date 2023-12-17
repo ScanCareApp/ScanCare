@@ -19,7 +19,7 @@ interface PredictHistoryDao {
     @Query("SELECT * FROM ingredients WHERE productNoBPOM = :productNoBPOM")
     suspend fun getIngredientsByProductId(productNoBPOM: String): List<IngredientEntity>
 
-    @Query("SELECT * FROM product")
-    suspend fun getAllScannedProducts(): List<ProductEntity>
+    @Query("SELECT * FROM product WHERE user_id = :userId")
+    suspend fun getAllScannedProducts(userId: String): List<ProductEntity>
 
 }

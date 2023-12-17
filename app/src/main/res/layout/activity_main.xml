@@ -29,7 +29,7 @@
 
     <TextView
         android:id="@+id/tvUsername"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppinssemibold"
         android:text="@string/username"
@@ -43,7 +43,7 @@
     <TextView
         android:id="@+id/profile"
         android:layout_width="380dp"
-        android:layout_height="150dp"
+        android:layout_height="155dp"
         android:layout_marginTop="112dp"
         android:background="@drawable/profilebox"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +64,7 @@
 
     <TextView
         android:id="@+id/username"
-        android:layout_width="94dp"
+        android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginTop="8dp"
         android:text="@string/username"
