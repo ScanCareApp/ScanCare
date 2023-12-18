@@ -11,6 +11,7 @@ import com.dicoding.scancare.R
 import com.dicoding.scancare.data.remote.ScanCareDataHolder
 import com.dicoding.scancare.databinding.ActivityResultBinding
 
+@Suppress("DEPRECATION")
 class ResultActivity : AppCompatActivity() {
     private lateinit var binding: ActivityResultBinding
     override fun onCreate(savedInstanceState: Bundle?) {

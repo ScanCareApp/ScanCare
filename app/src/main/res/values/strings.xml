@@ -43,4 +43,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="illegal">ILLEGAL</string>
+    <string name="switch_camera">Switch Camera</string>
+    <string name="save">Save</string>
+    <string name="select_photo_profile">Select Photo Profile</string>
 </resources>

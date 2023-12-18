@@ -58,7 +58,6 @@ class CameraActivity : AppCompatActivity() {
                 .also {
                     it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
                 }
-
             imageCapture = ImageCapture.Builder().build()
 
             try {

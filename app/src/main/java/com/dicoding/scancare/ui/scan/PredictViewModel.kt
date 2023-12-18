@@ -40,7 +40,7 @@ class PredictViewModel(private val repository: MainRepository, private val userP
                 val result = repository.predictImage(file)
                 liveData.postValue(result)
                 if (result is ResultState.Success) {
-                    processApiResponse(result.data) //
+                    processApiResponse(result.data)
                 }
             } catch (e: Exception) {
                 liveData.postValue(ResultState.Error(e.message ?: "Unknown error"))
@@ -71,8 +71,8 @@ class PredictViewModel(private val repository: MainRepository, private val userP
             val ingredientEntities = ingredientsList.map {
                 IngredientEntity(
                     productNoBPOM = details.noBPOM,
-                    nameIngredients = it?.nameIngredients ?: "",
-                    fungsi = it?.fungsi ?: ""
+                    nameIngredients = it.nameIngredients,
+                    fungsi = it.fungsi
                 )
             }
 

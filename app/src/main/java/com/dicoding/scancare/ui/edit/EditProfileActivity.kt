@@ -43,7 +43,7 @@ class EditProfileActivity : AppCompatActivity() {
     private var currentImageUri: Uri? = null
     private var previousImageUri: Uri? = null
     private var id: String = ""
- 
+
 
     private val userViewModel by viewModels<UserViewModel> {
         ViewModelFactory.getInstance(applicationContext)
@@ -94,10 +94,7 @@ class EditProfileActivity : AppCompatActivity() {
     private fun updateProfile(id: String, usn: TextInputEditText, address: TextInputEditText) {
         binding.progressBar.visibility = View.VISIBLE
 
-        // Cek apakah ada foto yang dipilih
         if (currentImageUri != null) {
-            // Jika ada foto yang dipilih
-            // Lakukan pembaruan dengan foto
             currentImageUri?.let { uri ->
                 val imageFile = uriToFile(uri, this).reduceFileImage()
                 val username = usn.text.toString().toRequestBody("text/plain".toMediaType())

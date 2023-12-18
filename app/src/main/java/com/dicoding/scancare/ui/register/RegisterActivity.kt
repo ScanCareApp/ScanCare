@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import com.dicoding.scancare.R
 import com.dicoding.scancare.ViewModelFactory
 import com.dicoding.scancare.data.preference.UserModel
@@ -43,7 +42,7 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        userViewModel.registerResult.observe(this, Observer { result ->
+        userViewModel.registerResult.observe(this) { result ->
             binding.progressBar.visibility = View.VISIBLE
             when (result) {
                 is ResultState.Success -> {
@@ -65,7 +64,7 @@ class RegisterActivity : AppCompatActivity() {
                     binding.progressBar.visibility = View.VISIBLE
                 }
             }
-        })
+        }
     }
 
     private fun showToast(message: String) {

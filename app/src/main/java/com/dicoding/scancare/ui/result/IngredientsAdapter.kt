@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.scancare.R
-import com.dicoding.scancare.data.database.ProductEntity
 import com.dicoding.scancare.data.remote.response.IngredientsItem
 import com.dicoding.scancare.ui.detail.DetailActivity
 
@@ -40,8 +39,5 @@ class IngredientsAdapter(private val ingredientsList: List<IngredientsItem>):Rec
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val ingredient = ingredientsList[position]
         holder.bind(ingredient)
-
     }
-
-
 }

@@ -4,9 +4,7 @@ import android.annotation.SuppressLint
 import android.graphics.PorterDuff
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MotionEvent
 import androidx.activity.viewModels
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +13,6 @@ import com.dicoding.scancare.R
 import com.dicoding.scancare.ViewModelFactory
 import com.dicoding.scancare.databinding.ActivityHistoryBinding
 import com.dicoding.scancare.ui.scan.PredictViewModel
-import com.google.android.material.appbar.AppBarLayout
 
 @Suppress("DEPRECATION")
 class HistoryActivity : AppCompatActivity() {
@@ -42,6 +39,7 @@ class HistoryActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
+
         viewModel.selectedProduct.observe(this) { product ->
             binding.apply {
                 textView.text = product.productName
@@ -55,7 +53,7 @@ class HistoryActivity : AppCompatActivity() {
             }
 
             if (isIllegal) {
-                binding.tvBpomStatusResult.text = getString(R.string.illegal)
+               binding.tvBpomStatusResult.text = getString(R.string.illegal)
                 binding.tvBpomStatusResult.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.baseline_close_24, 0, 0, 0)
                 binding.shapeView.background.setColorFilter(ContextCompat.getColor(this@HistoryActivity, R.color.red), PorterDuff.Mode.SRC_ATOP)
             } else {

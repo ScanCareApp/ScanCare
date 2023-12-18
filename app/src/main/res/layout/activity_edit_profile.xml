@@ -67,13 +67,14 @@
                     android:layout_below="@id/imgUser"
                     android:layout_marginTop="-50dp"
                     android:src="@drawable/camera"
-                    android:layout_marginStart="150dp"/>
+                    android:layout_marginStart="150dp"
+                    android:contentDescription="@string/select_photo_profile"/>
             </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Username"
+                android:text="@string/username"
                 android:fontFamily="@font/poppinsregular"
                 android:textSize="14sp"
                 />
@@ -94,7 +95,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Alamat"
+                android:text="@string/address"
                 android:fontFamily="@font/poppinsregular"
                 android:textSize="14sp"
                 android:layout_marginTop="16dp"
@@ -118,7 +119,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email"
+                android:text="@string/email"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/poppinsregular"
                 android:textSize="14sp"
@@ -149,7 +150,7 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="16dp"
                 android:layout_gravity="center_horizontal"
-                android:text="Save"
+                android:text="@string/save"
                 android:textColor="@android:color/white"
                 android:backgroundTint="#3F4E3F" />
 

@@ -4,6 +4,8 @@ import android.Manifest
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -114,6 +116,7 @@ class MainActivity : AppCompatActivity() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.layout_logout_dialog)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val btnYes: Button = dialog.findViewById(R.id.btnYes)
         val btnNo: Button = dialog.findViewById(R.id.btnNo)
@@ -124,14 +127,12 @@ class MainActivity : AppCompatActivity() {
             val loginActivity = Intent(this@MainActivity, WelcomeActivity::class.java)
             startActivity(loginActivity)
             finish()
-
-
         }
         btnNo.setOnClickListener {
             dialog.dismiss()
         }
-
         dialog.show()
+
 
     }
 
@@ -160,9 +161,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 is ResultState.Error -> {
                     binding.progressBar.visibility = View.GONE
-//                    val errorMessage = result.error
-//                    Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
-//                    finish()
                 }
             }
         }

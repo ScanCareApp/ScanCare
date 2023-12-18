@@ -18,6 +18,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 
+@Suppress("DEPRECATION")
 class ScanImageActivity : AppCompatActivity() {
     private lateinit var binding: ActivityScanImageBinding
 
@@ -60,19 +61,17 @@ class ScanImageActivity : AppCompatActivity() {
                 binding.progressBar.visibility = View.VISIBLE
                 when (result) {
                     is ResultState.Loading -> {
-                        // Anda mungkin ingin menampilkan progress di sini jika diperlukan
                         binding.progressBar.visibility = View.VISIBLE
                     }
                     is ResultState.Success -> {
-                        binding.progressBar.visibility = View.GONE //
+                        binding.progressBar.visibility = View.GONE
                         Log.d("Response Data", result.data.toString())
                         val intent = Intent(this@ScanImageActivity, ResultActivity::class.java)
                         startActivity(intent)
                         finish()
                     }
                     is ResultState.Error -> {
-                        // Menangani kesalahan
-                        binding.progressBar.visibility = View.GONE // Sembunyikan progress bar
+                        binding.progressBar.visibility = View.GONE
                         Toast.makeText(this@ScanImageActivity, result.error, Toast.LENGTH_SHORT).show()
                         finish()
                     }

@@ -41,11 +41,11 @@ class IngredientsHistoryAdapter : ListAdapter<IngredientEntity, IngredientsHisto
 
     class IngredientsDiffCallback : DiffUtil.ItemCallback<IngredientEntity>() {
         override fun areItemsTheSame(oldItem: IngredientEntity, newItem: IngredientEntity): Boolean {
-            return oldItem.id == newItem.id // Ganti dengan properti yang unik untuk memeriksa apakah item-item sama
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: IngredientEntity, newItem: IngredientEntity): Boolean {
-            return oldItem == newItem // Ganti dengan properti lain yang mempengaruhi tampilan item
+            return oldItem == newItem
         }
     }
 }
