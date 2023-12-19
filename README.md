@@ -14,6 +14,6 @@ sdk.dir=<sdk_location>
 ```
 
 ## Developer 👷‍♀
-This project is develop by:
+This project developed by:
 * [Ni Luh Anggita Gayatri](https://github.com/AnggitaGayatri)
 * [Zakiansyah](https://github.com/zakiansyah)
