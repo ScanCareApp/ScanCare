@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
@@ -17,6 +20,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ScanCare"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.scan.CameraActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.history.HistoryActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.edit.EditProfileActivity"
             android:exported="false" />

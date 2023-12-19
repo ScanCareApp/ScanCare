@@ -8,4 +8,7 @@
     <color name="whitegrey">#D9D9D9</color>
     <color name="grey">#8391A1</color>
     <color name="whiteolive">#E1E6E1</color>
+    <color name="red">#FF0000</color>
+    <color name="darkgreen">#2A342A</color>
+
 </resources>

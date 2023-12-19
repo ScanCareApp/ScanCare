@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.dicoding.scancare.ViewModelFactory
 import com.dicoding.scancare.data.remote.ResultState
@@ -17,6 +18,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 
+@Suppress("DEPRECATION")
 class ScanImageActivity : AppCompatActivity() {
     private lateinit var binding: ActivityScanImageBinding
 
@@ -37,6 +39,9 @@ class ScanImageActivity : AppCompatActivity() {
         binding.btnUpload.setOnClickListener {
             binding.progressBar.visibility = View.VISIBLE
             uploadImage()
+        }
+        binding.fabBack.setOnClickListener {
+            onBackPressed()
         }
     }
 
@@ -59,19 +64,19 @@ class ScanImageActivity : AppCompatActivity() {
                         binding.progressBar.visibility = View.VISIBLE
                     }
                     is ResultState.Success -> {
+                        binding.progressBar.visibility = View.GONE
                         Log.d("Response Data", result.data.toString())
-                        val response = result.data
                         val intent = Intent(this@ScanImageActivity, ResultActivity::class.java)
-                        intent.putExtra("productName", response.productName)
                         startActivity(intent)
                         finish()
                     }
                     is ResultState.Error -> {
                         binding.progressBar.visibility = View.GONE
+                        Toast.makeText(this@ScanImageActivity, result.error, Toast.LENGTH_SHORT).show()
+                        finish()
                     }
                 }
             }
         }
-
     }
 }

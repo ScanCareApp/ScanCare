@@ -4,15 +4,21 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.scancare.data.di.Injection
+import com.dicoding.scancare.data.preference.UserPreference
 import com.dicoding.scancare.data.repository.MainRepository
+import com.dicoding.scancare.data.repository.UserRepository
+import com.dicoding.scancare.ui.register.UserViewModel
 import com.dicoding.scancare.ui.scan.PredictViewModel
 
-class ViewModelFactory private constructor(private val mainRepository: MainRepository):
+class ViewModelFactory private constructor(private val mainRepository: MainRepository, private val userRepository: UserRepository, private val userPreference: UserPreference):
     ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(PredictViewModel::class.java)) {
-            return PredictViewModel(mainRepository) as T
+            return PredictViewModel(mainRepository, userPreference) as T
+        }
+        if (modelClass.isAssignableFrom(UserViewModel::class.java)) {
+            return UserViewModel(userRepository) as T
         }
 
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
@@ -23,7 +29,7 @@ class ViewModelFactory private constructor(private val mainRepository: MainRepos
         private var instance: ViewModelFactory? = null
 
         fun getInstance(context: Context): ViewModelFactory = instance ?: synchronized(this) {
-            instance ?: ViewModelFactory(Injection.provideRepository())
+            instance ?: ViewModelFactory(Injection.provideRepository(context), Injection.provideUserRepository(context), Injection.provideUserPreference(context))
         }.also { instance = it }
     }
 }

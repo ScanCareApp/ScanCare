@@ -17,13 +17,14 @@
 
     <TextView
         android:id="@+id/appName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_width="162dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/poppinsbold"
         android:text="@string/app_name"
         android:textColor="@color/brown"
         android:textSize="30sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,12 +33,14 @@
         android:id="@+id/tagline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppinssemibold"
         android:text="@string/tagline1"
         android:textColor="@color/brown"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appName" />
+        app:layout_constraintTop_toBottomOf="@+id/appName"
+        android:gravity="center"/>
 
     <TextView
         android:id="@+id/tagline2"
@@ -46,8 +49,8 @@
         android:layout_marginBottom="170dp"
         android:text="@string/tagline2"
         android:textColor="@color/brown"
-        android:textSize="25sp"
-        android:textStyle="bold"
+        android:textSize="20sp"
+        android:fontFamily="@font/poppinssemibold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
@@ -55,11 +58,11 @@
 
     <Button
         android:id="@+id/welcomeBtnRegister"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
         android:layout_marginTop="16dp"
         android:text="@string/register"
-        android:textStyle="bold"
+        android:fontFamily="@font/poppinsbold"
         android:backgroundTint="@color/green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,14 +70,16 @@
 
     <Button
         android:id="@+id/welcomeBtnLogin"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="40dp"
-        android:text="@string/login"
-        android:textStyle="bold"
         android:backgroundTint="@color/whitegrey"
+        android:fontFamily="@font/poppinsbold"
+        android:text="@string/login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeBtnRegister" />
 </androidx.constraintlayout.widget.ConstraintLayout>

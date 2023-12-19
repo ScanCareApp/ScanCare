@@ -73,16 +73,17 @@
 
     <TextView
         android:id="@+id/tvIngredientFunction"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="24dp"
         android:fontFamily="@font/poppinsregular"
         android:text="@string/ingredient_function"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/shapeView"
         app:layout_constraintStart_toStartOf="@+id/shapeView"
         app:layout_constraintTop_toTopOf="@+id/shapeView" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
