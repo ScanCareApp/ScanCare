@@ -1,3 +1,10 @@
+## ScanCare
+
+<p align="center">
+  <img width="240" src="https://github.com/ScanCareApp/ScanCare/assets/101720356/b42b98b4-e1fa-4e51-a5cf-7785ce3413d4">
+</p>
+
+
 ## How to install 🔧
 Clone this repository and import into **Android Studio**
 ```bash
