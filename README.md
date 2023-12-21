@@ -4,7 +4,7 @@
   <img width="240" src="https://github.com/ScanCareApp/ScanCare/blob/Development/assets/demo%20percepat.gif">
 </p>
 
-You can also click [this](https://drive.google.com/file/d/1nXH1Cbw6nankWKOBMeh9mdIanp92_t1q/view?usp=drive_link) to watch the demo
+You can also click [this](https://drive.google.com/file/d/1tsu883Emsm0NK-eQVPzZJIhnBRNnX199/view?usp=sharing) to watch the demo
 
 
 ## How to install 🔧
